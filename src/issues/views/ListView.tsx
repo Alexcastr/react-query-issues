@@ -16,7 +16,7 @@ export const ListView = () => {
   const [state, setState] = useState<State>()
 
  // para poder filtrar tenemos que pasarle el state y el selectedLabels al hook useIssues, y en este hook actualizarlo con el state y el selectedLabels, tambien en el cache
-  const { issueQuery } = useIssues({ labels: selectedLabels, state });
+  const { issueQuery, page, nextPage,prevPage } = useIssues({ labels: selectedLabels, state });
   
   //funcion que al darle click al label, cambia el estado de selectedLabels (agreaga o quita)
   const onLabelChanged = (labelName: string)=>{
@@ -41,6 +41,23 @@ export const ListView = () => {
        issues={issueQuery.data || []}
       />
      )}
+     <div className="d-flex mt-2 justify-content-between align-items-center">
+      <button 
+      disabled={issueQuery.isFetching}
+      onClick={prevPage} 
+      className="btn btn-outline-primary">
+       Prev
+      </button>
+
+      <span>{page}</span>
+
+      <button 
+      disabled={issueQuery.isFetching}
+      onClick={nextPage} 
+      className="btn btn-outline-primary">
+       Next
+      </button>
+     </div>
     </div>
 
     <div className="col-4">
