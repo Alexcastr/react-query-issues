@@ -33,5 +33,24 @@ h3 {
 
 .label-picker:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    transition: all .5s;
+    transition: all .2s;
+}
+
+.loader {
+    animation: spin-animation 1.5 infinite linear;
+    display: block;
+}
+
+@keyframes spin-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(359deg);
+    }
+}
+
+
+.label-active{
+    background-color: rgba(209, 207, 207, 0.4);
 }
