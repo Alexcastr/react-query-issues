@@ -11,17 +11,13 @@ node_modules
 dist
 dist-ssr
 *.local
-.env
-.env.local
-.env.development.local
+
 
 # misc
 .DS_Store
 
 
 # Vitepress
-env
-.env
 .env.local
 
 
