@@ -5,6 +5,7 @@ import { LoadingIcon } from '../../share/components/LoadingIcon';
 import { IssueList } from '../components/IssueList';
 import { LabelPicker } from '../components/LabelPicker';
 import { State } from '../interfaces';
+import { useIssueInfinite } from '../hooks/useIssueInfinite';
 
 
 
@@ -16,7 +17,7 @@ export const ListView = () => {
   const [state, setState] = useState<State>()
 
  // para poder filtrar tenemos que pasarle el state y el selectedLabels al hook useIssues, y en este hook actualizarlo con el state y el selectedLabels, tambien en el cache
-  const { issueQuery, page, nextPage,prevPage } = useIssues({ labels: selectedLabels, state });
+  const { issueQuery } = useIssueInfinite({ labels: selectedLabels, state });
   
   //funcion que al darle click al label, cambia el estado de selectedLabels (agreaga o quita)
   const onLabelChanged = (labelName: string)=>{
@@ -38,26 +39,15 @@ export const ListView = () => {
       <IssueList
        state={state}
        onStateChanged={(newState) => setState(newState)}
-       issues={issueQuery.data || []}
+       issues={issueQuery.data?.pages.flat() || []}
       />
      )}
-     <div className="d-flex mt-2 justify-content-between align-items-center">
-      <button 
-      disabled={issueQuery.isFetching}
-      onClick={prevPage} 
-      className="btn btn-outline-primary">
-       Prev
-      </button>
-
-      <span>{page}</span>
-
-      <button 
-      disabled={issueQuery.isFetching}
-      onClick={nextPage} 
-      className="btn btn-outline-primary">
-       Next
-      </button>
-     </div>
+   <button 
+   disabled={!issueQuery.hasNextPage}
+   onClick={()=> issueQuery.fetchNextPage()}
+   className='btn btn-outline-primary mt-3'>
+    Load more...
+   </button>
     </div>
 
     <div className="col-4">
