@@ -16,6 +16,12 @@ dist-ssr
 .DS_Store
 
 
+# Vitepress
+.env
+.env.local
+
+
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
